@@ -1,0 +1,64 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <link rel="icon" sizes="192x192"
+          href="https://next.privat24.ua/img/pwa/android/logo_192.png">
+</head>
+    <body th:inline="text">
+        <h1 th:text="#{msg.hello(${myTestObject.name}, ${currentTime})}">HELLO</h1>
+        <a th:href="@{/data}" th:text="#{msg.hello}">fdfhjdi</a>
+
+        <h3 th:text = "${myTestKey}"></h3>
+        <h3 th:text = "${myTestInt}"></h3>
+        <h3 th:text = "${myTestBool}"></h3>
+        <div th:object="${myTestObject}">
+            <p th:text="*{name}"></p>
+            <p th:text="*{age}"></p>
+            <p th:text="*{bornAt()}"></p>
+        </div>
+
+        <span>Текущее время: [[${currentTime}]]</span>
+
+        <ul th:each="user, meta:${users}">
+            <li style="width: 500px; border: 2px solid teal">
+                <h3>User info: [[${meta.count}]]</h3>
+                <h4 th:text="${user.name}"></h4>
+                <h4 th:text="${user.age}"></h4>
+                <h4 th:text="${user.bornAt()}"></h4>
+            </li>
+        </ul>
+
+        <div style="display: flex; justify-content: space-around; align-items: flex-start" >
+            <div th:each="user:${users}">
+                <hr/>
+                <div style="background-color: blue; width: 100px; height: 30px">
+                    <span style="color: rgba(255,215,0,0.45)" th:text="${user.name}"></span>
+                </div>
+                <div style="background-color: gold; width: 100px; height: 30px">
+                    <span style="color: rgba(78,78,77,0.45)" th:text="${user.bornAt()}"></span>
+                    <span th:switch="${user.status.toString()}">
+                        <div th:case="ONLINE" style="background-color: green; width: 8px; height: 8px; border-radius: 5px"></div>
+                        <div th:case="OFFLINE" style="background-color: red; width: 8px; height: 8px; border-radius: 5px"></div>
+                        <div th:case="DEAD" style="background-color: grey; width: 8px; height: 8px; border-radius: 5px"></div>
+                    </span>
+                </div>
+                <br/>
+            </div>
+        </div>
+        <!--
+        eq = equals (==)
+        ne = not eq (!=)
+        gt = >
+        lt = <
+        ge = >=
+        le = <=
+        -->
+
+    <div th:if="${currentTime > 0}" style="background-color: aquamarine">
+        <h1> IF TRUE</h1>
+    </div>
+
+        <div th:unless="${myTestBool}" style="background-color: teal">
+            <h1> UNLESS FALSE</h1>
+        </div>
+    </body>
+</html>
